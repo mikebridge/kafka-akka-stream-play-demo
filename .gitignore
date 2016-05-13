@@ -1,0 +1,41 @@
+*~
+*.log
+tmp
+dump
+
+# JS
+*.map
+
+# Idea
+/.idea
+/.idea_modules
+/.classpath
+/.project
+/.settings
+*.iml
+*.ipr
+*.iws
+/out/
+
+# SBT
+dist
+**/project/.sbtserver.lock
+**/project/boot
+**/project/target
+**/project/plugins/target
+**/target
+**/.target
+.sbtserver
+
+# Play
+logs
+RUNNING_PID
+
+# NPM
+**/node_modules
+npm-debug.log
+
+# JSPN
+**/jspm_packages
+
+
