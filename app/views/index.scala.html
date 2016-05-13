@@ -1,37 +1,18 @@
-@*
- * This template takes a single argument, a String containing a
- * message to display.
- *@
-@(message: String)
+@(webJarAssets: WebJarAssets)
 
-@*
- * Call the `main` template with two arguments. The first
- * argument is a `String` with the title of the page, the second
- * argument is an `Html` object containing the body of the page.
- *@
-@main("") {
+@main(webJarAssets) {
 
 
-    <h2>Number Stream via eventsource</h2>
+    <h2>Kafka Stream via EventSource</h2>
 
-    @* @queries.zipWithIndex.map { case(value, index) =>*@
-    @*<h3> <span id="message@index"></span> </h3>*@
-    @*}*@
-
+    <div id="messages"></div>
     <script type="text/javascript" charset="utf-8">
-        var feed = new EventSource("@routes.HomeController.numberStream");
+        var feed = new EventSource("@routes.HomeController.kafkaStream");
         console.log("feed", feed);
         feed.addEventListener('message', function(event) {
-            console.log(event.data)
+            //console.log(event.data)
+            $('#messages').append("<div>" + event.data + "</div>");
         });
-                @*var result  = jQuery.parseJSON(event.data);*@
-                @*console.log(result);*@
-                @* @queries.zipWithIndex.map { case(value, index) =>*@
-                @*if(result.searchQuery === "@value"){*@
-                    @*$('#message@index').html(result.searchQuery + " : " + result.message + " -" + result.author)*@
-                @*}*@
-                @*}*@
-            @*}, false);*@
     </script>
 
 

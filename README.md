@@ -30,9 +30,7 @@ Open a browser at: http://localhost:9000/
 ## Send Test Data
 
 ```sh
-./bin/kafka-avro-console-producer \
-             --broker-list localhost:9092 --topic test \
-             --property value.schema='{"type":"record","name":"myrecord","fields":[{"name":"f1","type":"string"}]}'
+./bin/kafka-console-producer --broker-list localhost:9092 --topic topic1 
 ```
 
-## View Test Data
+This should send the text to the web client.

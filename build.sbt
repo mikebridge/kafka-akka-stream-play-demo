@@ -11,7 +11,10 @@ libraryDependencies ++= Seq(
   cache,
   ws,
   "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test,
-  "com.typesafe.akka" %% "akka-stream-kafka" % "0.11-M2"
+  "com.typesafe.akka" %% "akka-stream-kafka" % "0.11-M2",
+  "org.webjars" %% "webjars-play" % "2.5.0",
+  "org.webjars" % "jquery" % "2.2.3"
+
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
