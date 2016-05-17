@@ -3,17 +3,55 @@
 @main(webJarAssets) {
 
 
-    <h2>Kafka Stream via EventSource</h2>
-
-    <div id="messages"></div>
+    <div>&nbsp;</div>
+    <form role="form" id="form">
+        <div class="row">
+        <div class="well col-xs-4 col-xs-offset-1">
+            <div><h3>Kafka Stream via EventSource</h3></div>
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="text" name="email" class="form-control" id="email" value="test@@example.com" />
+            </div>
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" name="firstname" class="form-control" id="firstname" value="Example"/>
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" name="lastname" class="form-control" id="lastname" value="User" />
+            </div>
+            <button type="submit" class="btn btn-default" id="btn-submit">Submit</button>
+        </div>
+            <div class="col-xs-4">
+                <h4>Result:</h4>
+                <div id="messages" class="col-xs-4"></div>
+            </div>
+        </div>
+    </form>
     <script type="text/javascript" charset="utf-8">
-        var feed = new EventSource("@routes.HomeController.kafkaStream");
-        console.log("feed", feed);
-        feed.addEventListener('message', function(event) {
-            //console.log(event.data)
-            $('#messages').append("<div>" + event.data + "</div>");
+        $(function () {
+            var feed = new EventSource("@routes.HomeController.kafkaStream");
+            console.log("feed", feed);
+
+            feed.addEventListener('message', function(event) {
+                //console.log(event.data)
+                $('#messages').append("<pre>" + event.data + "</pre>");
+            });
+
+            $("#btn-submit").click(function(event) {
+                event.preventDefault();
+                var formJson = {};
+                $.each($("form").serializeArray(), function() { formJson[this.name] = this.value });
+                $.ajax({
+                    method: "POST",
+                    url: "@routes.HomeController.capitalize",
+                    data: JSON.stringify(formJson),
+                    contentType: "application/json"
+                });
+            })
         });
     </script>
 
 
 }
+

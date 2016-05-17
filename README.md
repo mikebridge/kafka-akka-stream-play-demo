@@ -34,3 +34,12 @@ Open a browser at: http://localhost:9000/
 ```
 
 This should send the text to the web client.
+
+
+## Debugging
+
+View all messages:
+
+```sh
+./bin/kafka-console-consumer --topic topic1 --zookeeper localhost:2181 --from-beginning
+```

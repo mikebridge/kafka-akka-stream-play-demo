@@ -8,8 +8,10 @@ import play.api.libs.json._
 import play.api.mvc._
 import akka.NotUsed
 import akka.actor.ActorSystem
+import akka.kafka.ProducerSettings
 import akka.stream.scaladsl.{Source, _}
-
+import org.apache.kafka.clients.producer.{KafkaProducer, ProducerRecord}
+import org.apache.kafka.common.serialization.{ByteArraySerializer, StringSerializer}
 import play.api.libs.EventSource.Event
 
 import scala.concurrent.ExecutionContext
@@ -56,23 +58,40 @@ class HomeController @Inject()(webJarAssets: WebJarAssets)(implicit ec: Executio
   }
 
   def kafkaStream = Action {
-
     Ok.chunked(openKafkaStream(kafkaConsumerSettings) via EventSource.flow)
+  }
 
+
+  def capitalize = Action(parse.json) { implicit request =>
+    val json = request.body.toString()
+    val props = new java.util.Properties()
+    props.put("bootstrap.servers", "localhost:9092")
+    props.put("client.id", "KafkaProducer")
+    props.put("key.serializer", "org.apache.kafka.common.serialization.IntegerSerializer")
+    props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer")
+    val producer = new KafkaProducer[Integer,String](props)
+
+    var record = new ProducerRecord[Integer, String]("topic1", 1, json)
+    producer.send(record)
+    //val record = new ProducerRecord[Array[Byte], String]("topic1", json)
+    //Producer.Message(record, Producer.plainSink(kafkaProducerSettings)).passThrough
+    Ok
   }
 
   def openKafkaStream(consumerSettings: ConsumerSettings[Array[Byte], String]) =
     Consumer.plainSource(consumerSettings)
       .map(x => x.value)
 
+  def kafkaProducerSettings: ProducerSettings[Array[Byte], String] =
+    ProducerSettings(actorSystem, new ByteArraySerializer, new StringSerializer)
+      .withBootstrapServers("localhost:9092")
 
-  def kafkaConsumerSettings: ConsumerSettings[Array[Byte], String] = {
-
+  def kafkaConsumerSettings: ConsumerSettings[Array[Byte], String] =
     ConsumerSettings(actorSystem, new ByteArrayDeserializer, new StringDeserializer,
       Set("topic1"))
       .withBootstrapServers("localhost:9092")
       .withGroupId("group1")
       .withProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
 
-  }
+
 }
