@@ -1,4 +1,4 @@
-**Demo of Akka-Streams & Kafka**
+## Play Framework 2.5, Reactive Kafka & EventSource demo
 
 This demo is a single page web site which takes a form input, sends it as a json XHR request to a simple [Scala Controller](https://github.com/mikebridge/kafka-akka-stream-play-demo/blob/master/app/controllers/HomeController.scala) in [Play Framework 2.5](https://www.playframework.com/), which then pipes it to a [Kafka](http://kafka.apache.org/) Unified Log.  A listener then receives a notification from Kafka via an event stream via [Reactive Kafka](https://github.com/akka/reactive-kafka) and sends it immediately back to the browser as an HTML5 EventSource event.
 
@@ -6,7 +6,7 @@ It's also possible also send text messages to the browser and listen to the even
 
 This demo does not do anything fancy with topics, partitions groups---all messages go to and from all listening clients.
 
-## Set up
+## Setup
 
 Install [Confluent Kafka](http://www.confluent.io/developer#download), then:
 
@@ -25,13 +25,15 @@ $ ./bin/kafka-server-start ./etc/kafka/server.properties
 $ ./bin/schema-registry-start ./etc/schema-registry/schema-registry.properties
 ```
 
-## Running
+## Launch Play
 
 ```sh
 $ sbt run
 ```
 
-Open a browser at: http://localhost:9000/
+Wait for the internet to download.
+
+Open a browser at: [http://localhost:9000/](http://localhost:9000/)
 
 ## Send Test Data
 
