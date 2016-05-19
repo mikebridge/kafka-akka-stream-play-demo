@@ -1,6 +1,6 @@
 **Demo of Akka-Streams & Kafka**
 
-This demo is a single page web site which takes a form input, pipes it to a simple [Scala Controller](https://github.com/mikebridge/kafka-akka-stream-play-demo/blob/master/app/controllers/HomeController.scala) in [Play Framework 2.5](https://www.playframework.com/), which then pipes it to a (Kafka)[http://kafka.apache.org/] Unified Log.  A listener then receives a notification from Kafka via [Reactive Kafka](https://github.com/akka/reactive-kafka) and sends it back to the browser as an HTML5 EventSource event.
+This demo is a single page web site which takes a form input, pipes it to a simple [Scala Controller](https://github.com/mikebridge/kafka-akka-stream-play-demo/blob/master/app/controllers/HomeController.scala) in [Play Framework 2.5](https://www.playframework.com/), which then pipes it to a [Kafka](http://kafka.apache.org/) Unified Log.  A listener then receives a notification from Kafka via [Reactive Kafka](https://github.com/akka/reactive-kafka) and sends it back to the browser as an HTML5 EventSource event.
 
 This demo does not do anything fancy with topics, partitions groups---all messages go to and from all listening clients.
 
