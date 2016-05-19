@@ -1,8 +1,12 @@
 **Demo of Akka-Streams & Kafka**
 
+This demo is a single page web site which takes a form input, pipes it to Play, which then pipes it to Kafka.  A listener then receives a notification from Kafka via [Reactive Kafka](https://github.com/akka/reactive-kafka) and sends it back to the browser as an HTML5 EventSource event.
+
+(This demo does not yet take advantage of topics or partitions in Kafka.)
+
 ## Set up
 
-With (confluent Kafka)[http://www.confluent.io/developer#download]:
+Install [Confluent Kafka](http://www.confluent.io/developer#download), then:
 
 **Terminal #1**
 ```sh
@@ -28,6 +32,8 @@ $ sbt run
 Open a browser at: http://localhost:9000/
 
 ## Send Test Data
+
+You can send a message directly to the browser
 
 ```sh
 ./bin/kafka-console-producer --broker-list localhost:9092 --topic topic1 
